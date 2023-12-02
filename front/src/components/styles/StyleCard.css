@@ -1,6 +1,9 @@
 .card {
   padding: 2rem;
   border-radius: 10px;
+  border: 1px solid #4444;
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.1);
+
 }
 
 .badge {
@@ -13,11 +16,13 @@
   box-shadow: 0 0 0 1px rgba(255,255,255,0.1);
   transition: all 0.2s ease-in-out;
   font: 400 13.3333px Arial;
+  margin-top: 10px;
 }
 
 .badge:hover {
   background-color: #fff;
   color: black 
+
 }
 
 .btn {
@@ -45,3 +50,4 @@
   outline: none;
   opacity: 1;
 }
+

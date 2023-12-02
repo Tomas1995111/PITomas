@@ -1,15 +1,15 @@
-import Card from './components/Card'
-
+import Cards from './components/Cards'
+import fetchDataFromFile from './data/fetchData'
+import { useState } from 'react'
+import Data from './data/data'
 export default function App() {
   //     {/* Vamos a configurar el componente card */}
+  const [characters, setCharacters] = useState(Data)
+
+  
   return (
-    <Card 
-      name='Rick Astley'
-      status='Alive'
-      species='Human'
-      gender='Asexual'
-      origin='Mercuriano'
-      image='https://i.pinimg.com/474x/f3/58/49/f35849790b502ad1b9f4e4e49aa9c61d.jpg'
+    <Cards 
+      characters={characters}
     />
   )
 }
