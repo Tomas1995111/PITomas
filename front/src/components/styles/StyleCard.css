@@ -22,5 +22,26 @@
 
 .btn {
   padding: 10px;
-  
+  padding-left: 15px ;
+  padding-right: 15px;
+  background-color: #2196f3;
+  outline: none;
+  border: none;
+  font: 900 20px Arial;
+  position: relative;
+  top: 40px;
+  opacity: 0.8;
+}
+
+.btn:hover {
+  opacity: 1;
+}
+
+.btn:active {
+  transform: translateY(2px);
+}
+
+.btn:focus {
+  outline: none;
+  opacity: 1;
 }
