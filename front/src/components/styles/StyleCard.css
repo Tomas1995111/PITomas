@@ -1,0 +1,26 @@
+.card {
+  padding: 2rem;
+  border-radius: 10px;
+}
+
+.badge {
+  display: inline-flex;
+  margin-left: 0.3rem;
+  margin-right: 0.4rem;
+  padding:7px;
+  border: 1px solid #fff;
+  border-radius: 4px;
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.1);
+  transition: all 0.2s ease-in-out;
+  font: 400 13.3333px Arial;
+}
+
+.badge:hover {
+  background-color: #fff;
+  color: black 
+}
+
+.btn {
+  padding: 10px;
+  
+}
