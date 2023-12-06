@@ -11,6 +11,9 @@ import Form from './components/Form';
 
 export default function App() {
   const [characters, setCharacters] = useState([]);
+  const [access, setAccess] = useState(false); // Nuevo estado para el acceso
+  const EMAIL = 'tomasarriolaa@gmail.com'; // Variable para el correo electrónico
+  const PASSWORD = 'tomas1995'; // Variable para la contraseña
   const navigate = useNavigate();
 
   const handleSearch = (searchTerm) => {
@@ -49,10 +52,16 @@ export default function App() {
       {!isRootPath && <Nav />} {/* Mostrar Nav solo si no es la raíz */}
       <SearchBar onSearch={onSearch} />
       <Routes>
-        <Route path="/home" element={<Cards characters={characters} onClose={onClose} />} />
+        <Route
+          path="/home"
+          element={<Cards characters={characters} onClose={onClose} />}
+        />
         <Route path="/about" element={<About />} />
         <Route path="/detail/:id" element={<Detail />} />
-        <Route path="/" element={<Form />} />
+        <Route
+          path="/"
+          element={<Form access={access} setAccess={setAccess} EMAIL={EMAIL} PASSWORD={PASSWORD} />}
+        />
         <Route path="*" element={<Error404 />} />
       </Routes>
     </div>
