@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import Nav from './components/Nav';
 import Cards from './components/Cards';
 import About from './components/About';
 import Detail from './components/Detail';
 import SearchBar from './components/SearchBar';
-import Error404 from './components/Error404'; // Importa el componente Error404
-import Form from './components/Form'; // Importa el componente Form
+import Error404 from './components/Error404';
+import Form from './components/Form';
 
 export default function App() {
   const [characters, setCharacters] = useState([]);
+  const navigate = useNavigate();
 
   const handleSearch = (searchTerm) => {
     const filteredCharacters = characters.filter((character) =>
@@ -40,16 +41,18 @@ export default function App() {
     setCharacters(updatedCharacters);
   };
 
+  // Verificar si la ruta actual es la raíz ("/")
+  const isRootPath = window.location.pathname === '/';
+
   return (
     <div>
-      <Nav />
+      {!isRootPath && <Nav />} {/* Mostrar Nav solo si no es la raíz */}
       <SearchBar onSearch={onSearch} />
       <Routes>
         <Route path="/home" element={<Cards characters={characters} onClose={onClose} />} />
         <Route path="/about" element={<About />} />
         <Route path="/detail/:id" element={<Detail />} />
-        <Route path="/" element={<Form />} /> {/* Ruta para renderizar el componente Form */}
-        {/* Ruta comodín (*) para capturar rutas no coincidentes */}
+        <Route path="/" element={<Form />} />
         <Route path="*" element={<Error404 />} />
       </Routes>
     </div>
