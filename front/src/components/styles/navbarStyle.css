@@ -1,0 +1,68 @@
+.navbar {
+  display: grid;
+  grid-template-columns: .5fr 1fr .5fr;
+  grid-template-rows: 1fr;
+}
+
+.navbar img {
+  width: 45%;
+  height: 65%;
+  display: block;
+  margin: auto;
+
+  /* transition */
+  transition: transform 0.2s ease;
+}
+
+.navbar img:hover {
+  transform: scale(1.05);
+  cursor: pointer;
+
+}
+
+.izqNav {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.izqNav a {
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.87);
+  font-size: 1.2rem;
+  margin: 0 1rem;
+  border: 1px solid #333;
+  border-radius: 5px;
+  padding: 10px;
+
+  transition: all 0.2s ease;
+}
+
+.izqNav a:hover {
+  background-color: #333;
+  color: #fff;
+  cursor: pointer;
+}
+
+.derNav  button {
+  background-color: transparent;
+  border: 2px solid #388E3C;
+  padding: 1rem;
+  border-radius: 5px;
+  /* center */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  transition: all 0.2s ease;
+}
+
+.derNav  button:hover {
+  background-color: #388E3C;
+  cursor: pointer;
+}
+
+.active {
+  background-color: #388E3C;
+  color: #fff;
+}

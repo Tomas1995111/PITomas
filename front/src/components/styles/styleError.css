@@ -1,0 +1,28 @@
+.error {
+  --margin: 2rem;
+  padding: 1.5rem;
+  margin-left: var(--margin);
+  margin-right: var(--margin);
+
+  text-align: center;
+  border: 1px solid #D32F2F;
+  background-color: #F44336;
+  border-radius: 10px;
+  opacity: 0.9;
+  
+}
+
+.message {
+  --margin: 2rem;
+  padding: 1.5rem;
+  margin-left: var(--margin);
+  margin-right: var(--margin);
+
+  text-align: center;
+  border: 1px solid #F57C00;
+  background-color: #FF9800;
+  border-radius: 10px;
+  opacity: 0.9;
+
+  
+}
