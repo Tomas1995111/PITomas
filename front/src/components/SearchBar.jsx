@@ -13,6 +13,12 @@ const AddCharacter = ({ onSearch }) => {
     setId(''); // Restablecer el estado id después de realizar la búsqueda
   };
 
+  const handleRandomClick = () => {
+    const randomId = Math.floor(Math.random() * 826) + 1; // ID aleatorio entre 1 y 826
+    onSearch(randomId.toString()); // Pasar el número aleatorio como argumento a la función onSearch
+    setId(''); // Restablecer el estado id después de realizar la búsqueda
+  };
+
   return (
     <div>
       <input
@@ -22,6 +28,7 @@ const AddCharacter = ({ onSearch }) => {
         onChange={handleChange} // Pasar la función handleChange al evento onChange
       />
       <button onClick={handleAddClick}>Agregar</button>
+      <button onClick={handleRandomClick}>Aleatorio</button>
     </div>
   );
 };
