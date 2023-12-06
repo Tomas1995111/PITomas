@@ -1,6 +1,21 @@
-import React from 'react';
-import { Link } from 'react-router-dom'; // Importa la etiqueta Link
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { addFav, removeFav } from '../redux/actions';
 import './styles/StyleCard.css';
+import { connect } from 'react-redux';
+
+const mapDispatchToProps = dispatch => {
+  return {
+    addToFavorites: id => dispatch(addFav(id)),
+    removeFromFavorites: id => dispatch(removeFav(id))
+  };
+};
+
+const mapStateToProps = state => {
+  return {
+    myFavorites: state.myFavorites
+  };
+};
 
 export function Badge({ info }) {
   return (
@@ -27,23 +42,50 @@ export function CardInfo({
   );
 }
 
-export default function Card({
+export function Card({
   id,
   name, status, species, gender,
-  origin, image, onClose // Propiedad onClose pasada al componente Card
+  origin, image, onClose, addToFavorites, removeFromFavorites, myFavorites
 }) {
-  console.log('ID del personaje en Card:', id); // Nuevo console.log
+  const [isFav, setIsFav] = useState(false);
 
+  useEffect(() => {
+    myFavorites.forEach((fav) => {
+      if (fav.id === id) {
+        setIsFav(true);
+      }
+    });
+  }, [id, myFavorites]);
+
+  const handleFavorite = () => {
+  console.log('Antes de handleFavorite - isFav:', isFav);
+ 
+  if (isFav) {
+    setIsFav(false);
+    removeFromFavorites(id);
+  } else {
+    setIsFav(true);
+    addToFavorites(id);
+  }
+
+  console.log('Después de handleFavorite - isFav:', isFav);
+  console.log('myFavorites después de handleFavorite:', myFavorites);
+};
   return (
     <article className="card">
-      <button
-        className='btn'
-        onClick={() => onClose(id)} // Llama a onClose con el id cuando se hace clic
-      >
-        X
-      </button>
+<button
+  className='btn'
+  onClick={(e) => {
+    e.stopPropagation();
+    console.log('Cerrando tarjeta con ID:', id);
+    onClose(id);
+    console.log('Después de cerrar tarjeta con ID:', id);
+  }}
+>
+  X
+</button>
 
-      <Link to={`/detail/${id}`} > {/* Utiliza la etiqueta Link con la ruta deseada */}
+      <Link to={`/detail/${id}`}>
         <div className="card__img">
           <img src={image} alt={name} />
           <CardInfo
@@ -55,6 +97,14 @@ export default function Card({
           />
         </div>
       </Link>
+
+      {isFav ? (
+        <button onClick={handleFavorite}>❤️</button>
+      ) : (
+        <button onClick={handleFavorite}>🤍</button>
+      )}
     </article>
   );
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Card);

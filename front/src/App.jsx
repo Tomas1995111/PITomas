@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import Nav from './components/Nav';
@@ -17,15 +17,16 @@ export default function App() {
   const navigate = useNavigate();
 
   const handleSearch = (searchTerm) => {
-    // Realiza la búsqueda utilizando el término de búsqueda (searchTerm)
     axios(`https://rym2.up.railway.app/api/character/${searchTerm}?key=pi-tomas1995111`)
       .then(({ data }) => {
-        console.log('Respuesta de la API:', data);
-        if (data.name) {
-          setCharacters((oldChars) => [...oldChars, data]);
-        } else {
-          window.alert('¡No hay personajes con este ID!');
-        }
+        setCharacters((oldChars) => {
+          if (data.name) {
+            return [...oldChars, data];
+          } else {
+            window.alert('¡No hay personajes con este ID!');
+            return oldChars;
+          }
+        });
       })
       .catch((error) => {
         console.error("Error en la solicitud:", error);
@@ -33,18 +34,25 @@ export default function App() {
   };
 
   const onSearch = (id) => {
-    // Llama a la función de búsqueda con el ID proporcionado
     handleSearch(id);
   };
 
   const onClose = (id) => {
-    const updatedCharacters = characters.filter((character) => character.id !== id.toString());
-    setCharacters(updatedCharacters);
+    console.log("Cerrando tarjeta con ID:", id);
+  
+    setCharacters((prevCharacters) => {
+      const updatedCharacters = prevCharacters.filter((character) => character.id !== id.toString());
+      console.log("Personajes actualizados:", updatedCharacters);
+      return updatedCharacters;
+    });
   };
+
+  useEffect(() => {
+    console.log("Personajes actualizados:", characters);
+  }, [characters]);
 
   const isRootPath = window.location.pathname === '/';
 
-  // Función de login
   const login = (userData) => {
     if (userData.password === PASSWORD && userData.email === EMAIL) {
       setAccess(true);
@@ -52,10 +60,9 @@ export default function App() {
     }
   };
 
-  // Función de logout
   const handleLogout = () => {
     setAccess(false);
-    setCharacters([]); // Limpiar la lista de personajes al hacer logout
+    setCharacters([]);
     navigate('/');
   };
 
@@ -79,3 +86,4 @@ export default function App() {
     </div>
   );
 }
+
