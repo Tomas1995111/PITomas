@@ -7,6 +7,7 @@ import About from './components/About';
 import Detail from './components/Detail';
 import SearchBar from './components/SearchBar';
 import Error404 from './components/Error404'; // Importa el componente Error404
+import Form from './components/Form'; // Importa el componente Form
 
 export default function App() {
   const [characters, setCharacters] = useState([]);
@@ -47,6 +48,7 @@ export default function App() {
         <Route path="/home" element={<Cards characters={characters} onClose={onClose} />} />
         <Route path="/about" element={<About />} />
         <Route path="/detail/:id" element={<Detail />} />
+        <Route path="/" element={<Form />} /> {/* Ruta para renderizar el componente Form */}
         {/* Ruta comodín (*) para capturar rutas no coincidentes */}
         <Route path="*" element={<Error404 />} />
       </Routes>
