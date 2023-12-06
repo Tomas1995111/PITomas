@@ -1,8 +1,14 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
-const Nav = (props) => {
-  // ... código del componente Nav
+const Nav = ({ onLogout }) => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    // Manejar el cierre de sesión y redirigir a la página de inicio de sesión
+    onLogout();
+    navigate('/');
+  };
 
   return (
     <div>
@@ -16,6 +22,8 @@ const Nav = (props) => {
           </li>
         </ul>
       </nav>
+      {/* Agregar el botón "Log out" y su manejador de eventos */}
+      <button onClick={handleLogout}>Log out</button>
       {/* ... otros elementos del componente Nav */}
     </div>
   );

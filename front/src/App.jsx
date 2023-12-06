@@ -11,21 +11,14 @@ import Form from './components/Form';
 
 export default function App() {
   const [characters, setCharacters] = useState([]);
-  const [access, setAccess] = useState(false); // Nuevo estado para el acceso
-  const EMAIL = 'tomasarriolaa@gmail.com'; // Variable para el correo electrónico
-  const PASSWORD = 'tomas1995'; // Variable para la contraseña
+  const [access, setAccess] = useState(false);
+  const EMAIL = 'tomasarriolaa@gmail.com';
+  const PASSWORD = 'tomas1995';
   const navigate = useNavigate();
 
   const handleSearch = (searchTerm) => {
-    const filteredCharacters = characters.filter((character) =>
-      character.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-
-    setCharacters(filteredCharacters);
-  };
-
-  const onSearch = (id) => {
-    axios(`https://rym2.up.railway.app/api/character/${id}?key=pi-tomas1995111`)
+    // Realiza la búsqueda utilizando el término de búsqueda (searchTerm)
+    axios(`https://rym2.up.railway.app/api/character/${searchTerm}?key=pi-tomas1995111`)
       .then(({ data }) => {
         console.log('Respuesta de la API:', data);
         if (data.name) {
@@ -39,17 +32,36 @@ export default function App() {
       });
   };
 
+  const onSearch = (id) => {
+    // Llama a la función de búsqueda con el ID proporcionado
+    handleSearch(id);
+  };
+
   const onClose = (id) => {
-    const updatedCharacters = characters.filter((character) => character.id !== String(id));
+    const updatedCharacters = characters.filter((character) => character.id !== id.toString());
     setCharacters(updatedCharacters);
   };
 
-  // Verificar si la ruta actual es la raíz ("/")
   const isRootPath = window.location.pathname === '/';
+
+  // Función de login
+  const login = (userData) => {
+    if (userData.password === PASSWORD && userData.email === EMAIL) {
+      setAccess(true);
+      navigate('/home');
+    }
+  };
+
+  // Función de logout
+  const handleLogout = () => {
+    setAccess(false);
+    setCharacters([]); // Limpiar la lista de personajes al hacer logout
+    navigate('/');
+  };
 
   return (
     <div>
-      {!isRootPath && <Nav />} {/* Mostrar Nav solo si no es la raíz */}
+      {!isRootPath && <Nav onLogout={handleLogout} />}
       <SearchBar onSearch={onSearch} />
       <Routes>
         <Route
@@ -57,10 +69,12 @@ export default function App() {
           element={<Cards characters={characters} onClose={onClose} />}
         />
         <Route path="/about" element={<About />} />
+        
         <Route path="/detail/:id" element={<Detail />} />
+        
         <Route
           path="/"
-          element={<Form access={access} setAccess={setAccess} EMAIL={EMAIL} PASSWORD={PASSWORD} />}
+          element={<Form access={access} setAccess={setAccess} EMAIL={EMAIL} PASSWORD={PASSWORD} login={login} />}
         />
         <Route path="*" element={<Error404 />} />
       </Routes>

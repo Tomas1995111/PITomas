@@ -32,6 +32,8 @@ export default function Card({
   name, status, species, gender,
   origin, image, onClose // Propiedad onClose pasada al componente Card
 }) {
+  console.log('ID del personaje en Card:', id); // Nuevo console.log
+
   return (
     <article className="card">
       <button
