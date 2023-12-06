@@ -1,27 +1,27 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Route, Routes } from 'react-router-dom';
+import Nav from './components/Nav';
 import Cards from './components/Cards';
+import About from './components/About';
+import Detail from './components/Detail';
 import SearchBar from './components/SearchBar';
+import Error404 from './components/Error404'; // Importa el componente Error404
 
 export default function App() {
   const [characters, setCharacters] = useState([]);
 
-  // Función para buscar personajes
   const handleSearch = (searchTerm) => {
-    // Lógica para buscar personajes según el término de búsqueda
-    // Utiliza characters en lugar de Data
     const filteredCharacters = characters.filter((character) =>
       character.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    // Actualizar el estado con los personajes filtrados
     setCharacters(filteredCharacters);
   };
 
-  // Nueva función para buscar personaje por ID utilizando Axios
   const onSearch = (id) => {
-    axios(`https://rym2.up.railway.app/api/character/${id}?key=pi-tomas1995111`).then(
-      ({ data }) => {
+    axios(`https://rym2.up.railway.app/api/character/${id}?key=pi-tomas1995111`)
+      .then(({ data }) => {
         console.log('Respuesta de la API:', data);
         if (data.name) {
           setCharacters((oldChars) => [...oldChars, data]);
@@ -33,19 +33,23 @@ export default function App() {
         console.error("Error en la solicitud:", error);
       });
   };
-  // Nueva función para filtrar personajes por ID y actualizar el estado
-  const onClose = (id) => {
-    // Filtrar personajes cuyo id sea diferente al id recibido por parámetro
-    const updatedCharacters = characters.filter((character) => character.id !== String(id));
 
-    // Actualizar el estado con los personajes filtrados
+  const onClose = (id) => {
+    const updatedCharacters = characters.filter((character) => character.id !== String(id));
     setCharacters(updatedCharacters);
   };
 
   return (
     <div>
+      <Nav />
       <SearchBar onSearch={onSearch} />
-      <Cards characters={characters} onClose={onClose} />
+      <Routes>
+        <Route path="/home" element={<Cards characters={characters} onClose={onClose} />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/detail/:id" element={<Detail />} />
+        {/* Ruta comodín (*) para capturar rutas no coincidentes */}
+        <Route path="*" element={<Error404 />} />
+      </Routes>
     </div>
   );
 }

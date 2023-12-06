@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom'; // Importa la etiqueta Link
 import './styles/StyleCard.css';
 
 export function Badge({ info }) {
@@ -40,16 +41,18 @@ export default function Card({
         X
       </button>
 
-      <div className="card__img">
-        <img src={image} alt={name} />
-        <CardInfo
-          name={name}
-          status={status}
-          species={species}
-          gender={gender}
-          origin={origin}
-        />
-      </div>
+      <Link to={`/detail/${id}`} > {/* Utiliza la etiqueta Link con la ruta deseada */}
+        <div className="card__img">
+          <img src={image} alt={name} />
+          <CardInfo
+            name={name}
+            status={status}
+            species={species}
+            gender={gender}
+            origin={origin}
+          />
+        </div>
+      </Link>
     </article>
   );
 }
