@@ -1,11 +1,12 @@
-import './styles/StyleCard.css'
+import React from 'react';
+import './styles/StyleCard.css';
 
 export function Badge({ info }) {
   return (
     <div className="badge">
-    <span>{info}</span>
-  </div>
-  )
+      <span>{info}</span>
+    </div>
+  );
 }
 
 export function CardInfo({
@@ -14,7 +15,6 @@ export function CardInfo({
 }) {
   return (
     <aside>
-      {/* El h2 va por el SEO */}
       <h2 id="titulo">{name}</h2>
       <div className="card__info">
         <Badge info={status} />
@@ -23,18 +23,22 @@ export function CardInfo({
         <Badge info={gender} />
       </div>
     </aside>
-  )
+  );
 }
 
 export default function Card({
+  id,
   name, status, species, gender,
-  origin, image
+  origin, image, onClose // Propiedad onClose pasada al componente Card
 }) {
   return (
     <article className="card">
       <button
         className='btn'
-      >X</button>
+        onClick={() => onClose(id)} // Llama a onClose con el id cuando se hace clic
+      >
+        X
+      </button>
 
       <div className="card__img">
         <img src={image} alt={name} />
@@ -43,8 +47,9 @@ export default function Card({
           status={status}
           species={species}
           gender={gender}
-          origin={origin} />
+          origin={origin}
+        />
       </div>
     </article>
-  )
+  );
 }
